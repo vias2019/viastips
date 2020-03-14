@@ -7,6 +7,7 @@ const Header = (props) => {
     <View style={styles.header}>
       <Text style={styles.text}>{props.title}</Text>
       {/* alternative <Text style={styles.text}>{title}</Text> */}
+     {console.log(props)}
     </View>
   );
 }

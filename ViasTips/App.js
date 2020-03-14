@@ -21,18 +21,18 @@ const App = () => {
   };
 
   const addItem = (text) => {
-    // if(!text){
-    //   Alert.alert('Error', 'Please enter an item',{text: "OK"});
-    // } else{
-    setItems(prevItems => {
-      return [{id: uuid(), text}, ...prevItems];
-    });
-  //}
+    if (!text) {
+      Alert.alert('Error', 'Please enter an item', [{ text: 'OK' }]);
+    } else {
+      setItems(prevItems => {
+        return [{ id: uuid(), text }, ...prevItems];
+      });
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Header title='Vias Tips' />
+      <Header title='Vias Shopping List' />
       <AddItem addItem={addItem} />
       <FlatList
         data={items}
