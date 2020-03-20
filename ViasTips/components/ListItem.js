@@ -1,35 +1,54 @@
 import React from 'react';
-import {View,Text,StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-const ListItem = ({item, deleteItem}) => {
-    //alternative const ListItem = ({item})=>{
+
+
+const ListItem = ({ item, deleteItem, ifTextTouched, getStyle }) => {
+  console.log("****", item.id);
+  console.log("**item", item);
+  console.log("***item.text", item.text);
+  //alternative const ListItem = ({item})=>{
+  // console.log(item);
+  // const getStyle = () => {
+  //   return {
+  //     textDecorationLine: item.ifPressed ? 'line-through' : 'none'
+  //   };
+  // };
+
   return (
     <TouchableOpacity style={styles.listItem}>
-      <View style={styles.listItemView}>
-          <Text style={styles.listItemText}>{item.text}</Text>
-          <Icon name="remove" size={20} color='firebrick'
+      <View style={styles.listItemView}  >
+        <Text style={item.ifPressed ? styles.listItemText : styles.ifDone} 
+        //getStyle(item)}
+        onPress={() => ifTextTouched(item.id)} 
+        >{item.text}</Text>
+        <Icon name="remove" size={20} color='firebrick'
           onPress={() => deleteItem(item.id)} />
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 
 const styles = StyleSheet.create({
   listItem: {
-      padding: 15,
-      backgroundColor: '#f8f8f8',
-      borderBottomWidth: 1,
-      borderColor: '#eee'
+    padding: 15,
+    backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    borderColor: '#eee'
   },
   listItemView: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   listItemText: {
-      fontSize: 18
+    fontSize: 18
+  },
+  ifDone: {
+    fontSize: 18,
+    textDecorationLine: 'line-through'
   }
 });
 

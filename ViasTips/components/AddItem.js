@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import {View,Text,StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import {AsyncStorage} from 'react-native';
 
 const AddItem = ({title, addItem}) => {
-const [text, setText]= useState('');
+const [text1, setText]= useState('');
 const onChange =(textValue) => setText(textValue);
 
     //alternative const Header = (props)=>{
@@ -14,7 +15,7 @@ const onChange =(textValue) => setText(textValue);
         onChangeText={onChange}
         
         />
-        <TouchableOpacity style={styles.btn} onPress={() => addItem (text)}>
+        <TouchableOpacity style={styles.btn} onPress={() => addItem (text1)}>
             <Text style={styles.btnText}>
                 <Icon name="plus" size={20}/>Add Item
             </Text>

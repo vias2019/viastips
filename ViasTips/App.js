@@ -1,23 +1,48 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Alert, ScrollView } from 'react-native';
 import { uuid } from 'uuidv4';
 import Header from './components/Header';
 import ListItem from './components/ListItem';
 import AddItem from './components/AddItem';
 
-
 const App = () => {
-  const [items, setItems] = useState([
-    { id: uuid(), text: 'Milk' },
-    { id: uuid(), text: 'Egs' },
-    { id: uuid(), text: 'Chips' },
-    { id: uuid(), text: 'Bread' }
+  const [list, setItems] = useState([
+    { id: uuid(), text: 'Milk', ifPressed: true },
+    { id: uuid(), text: 'Egs', ifPressed: true },
+    { id: uuid(), text: 'Chips', ifPressed: false },
+    { id: uuid(), text: 'Bread', ifPressed: false }
   ]);
 
   const deleteItem = id => {
     setItems(prevItems => {
-      return prevItems.filter(item => item.id !== id);
+      console.log("PrevItems: ", prevItems);
+      //console.log("delete Items: ", prevItems.filter(item1 => item1.id !== id));
+      return prevItems.filter(item1 => item1.id !== id);
     });
+  };
+  const getStyle = (list) => {
+    console.log("*****get style",list);
+    return {
+      textDecorationLine: list.ifPressed ? 'line-through' : 'none'
+    };
+  };
+  const ifTextTouched = id => {
+    //console.log("item1 id: ", id);
+    //console.log("list: ", list);
+
+    setItems(
+      () => {
+        list.map(listee => {
+          if (listee.id == id) {
+            listee.ifPressed = !listee.ifPressed;
+          }
+          
+        }); 
+        //getStyle(list);
+        console.log("Exactly this list: ", list);
+        return (list);
+      }
+    );
   };
 
   const addItem = (text) => {
@@ -25,7 +50,7 @@ const App = () => {
       Alert.alert('Error', 'Please enter an item', [{ text: 'OK' }]);
     } else {
       setItems(prevItems => {
-        return [{ id: uuid(), text }, ...prevItems];
+        return [{ id: uuid(), text, ifPressed: false }, ...prevItems];
       });
     }
   };
@@ -34,13 +59,19 @@ const App = () => {
     <View style={styles.container}>
       <Header title='Vias Shopping List' />
       <AddItem addItem={addItem} />
+      <ScrollView>
       <FlatList
-        data={items}
-        renderItem={({ item }) =>(
-          //<Text>{item.text}</Text>}
-          <ListItem item={item} 
-          deleteItem={deleteItem}/>)}
+        data={list}
+        renderItem={({ item }) => (
+          //<Text>{item.text}</Text>
+          <ListItem item={item}
+            //keyExtractor={item => item.id}
+            getStyle={getStyle}
+            deleteItem={deleteItem}
+            ifTextTouched={ifTextTouched}
+          />)}
       />
+      </ScrollView>
     </View>
   );
 };
@@ -50,6 +81,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 10
   }
-
 });
 export default App;

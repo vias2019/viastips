@@ -7,7 +7,7 @@ const Header = (props) => {
     <View style={styles.header}>
       <Text style={styles.text}>{props.title}</Text>
       {/* alternative <Text style={styles.text}>{title}</Text> */}
-     {console.log(props)}
+    
     </View>
   );
 }
@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
   text: {
       color: '#fff',
       fontSize: 23,
-      textAlign: 'center'
+      textAlign: 'center',
+      fontStyle: 'italic'
   }
   
 });
