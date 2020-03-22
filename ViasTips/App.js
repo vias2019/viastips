@@ -21,13 +21,13 @@ const App = () => {
       return prevItems.filter(item1 => item1.id !== id);
     });
   };
-  const getStyle = (list) => {
-    console.log("*****get style",list);
+  // const getStyle = (list) => {
+  //   console.log("*****get style",list);
     
-    return {
-      textDecorationLine: list.ifPressed ? 'line-through' : 'none'
-    };
-  };
+  //   return {
+  //     textDecorationLine: list.ifPressed ? 'line-through' : 'none'
+  //   };
+  // };
 
   
   const ifTextTouched = id => {

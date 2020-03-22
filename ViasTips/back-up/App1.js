@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Alert, ScrollView } from 'react-native';
 import { uuid } from 'uuidv4';
-import Header from './components/Header';
-import ListItem from './components/ListItem';
-import AddItem from './components/AddItem';
+import Header from '../components/Header';
+import ListItem from '../components/ListItem';
+import AddItem from '../components/AddItem';
 
 const App = () => {
   const [list, setItems] = useState({currentList:[
