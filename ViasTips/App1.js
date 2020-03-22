@@ -1,114 +1,78 @@
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  *
-//  * @format
-//  * @flow
-//  */
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Alert, ScrollView } from 'react-native';
+import { uuid } from 'uuidv4';
+import Header from './components/Header';
+import ListItem from './components/ListItem';
+import AddItem from './components/AddItem';
 
-// import React from 'react';
-// import {
-//   SafeAreaView,
-//   StyleSheet,
-//   ScrollView,
-//   View,
-//   Text,
-//   StatusBar,
-// } from 'react-native';
+const App = () => {
+  const [list, setItems] = useState({currentList:[
+    { id: uuid(), text: 'Milk', ifPressed: true },
+    { id: uuid(), text: 'Egs', ifPressed: true },
+    { id: uuid(), text: 'Chips', ifPressed: false },
+    { id: uuid(), text: 'Bread', ifPressed: false }
+  ]});
 
-// import {
-//   Header,
-//   LearnMoreLinks,
-//   Colors,
-//   DebugInstructions,
-//   ReloadInstructions,
-// } from 'react-native/Libraries/NewAppScreen';
+  const deleteItem = id => {
+    setItems(prevItems => {
+      console.log("PrevItems: ", prevItems);
+      //console.log("delete Items: ", prevItems.filter(item1 => item1.id !== id));
+      return prevItems.filter(item1 => item1.id !== id);
+    });
+  };
+  // const getStyle = (list) => {
+  //   console.log("*****get style",list);
+  //   return {
+  //     textDecorationLine: list.ifPressed ? 'line-through' : 'none'
+  //   };
+  // };
+  const ifTextTouched = id => {
+    //console.log("item1 id: ", id);
+    //console.log("list: ", list);
+   
+        list.currentList.map(listee => {
+          if (listee.id == id) {
+            listee.ifPressed = !listee.ifPressed;
+          }
+        }); 
+        setItems({currentList: list.currentList});
+  };
 
-// const App: () => React$Node = () => {
-//   return (
-//     <>
-//       <StatusBar barStyle="dark-content" />
-//       <SafeAreaView>
-//         <ScrollView
-//           contentInsetAdjustmentBehavior="automatic"
-//           style={styles.scrollView}>
-//           <Header />
-//           {global.HermesInternal == null ? null : (
-//             <View style={styles.engine}>
-//               <Text style={styles.footer}>Engine: Hermes</Text>
-//             </View>
-//           )}
-//           <View style={styles.body}>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Step One</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Edit <Text style={styles.highlight}>App.js</Text> to change this
-//                 screen and then come back to see your edits.
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>See Your Changes</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <ReloadInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Debug</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <DebugInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Learn More</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Read the docs to discover what to do next:
-//               </Text>
-//             </View>
-//             <LearnMoreLinks />
-//           </View>
-//         </ScrollView>
-//       </SafeAreaView>
-//     </>
-//   );
-// };
+  const addItem = (text) => {
+    if (!text) {
+      Alert.alert('Error', 'Please enter an item', [{ text: 'OK' }]);
+    } else {
+      setItems(prevItems => {
+        return [{ id: uuid(), text, ifPressed: false }, ...prevItems];
+      });
+    }
+  };
 
-// const styles = StyleSheet.create({
-//   scrollView: {
-//     backgroundColor: Colors.lighter,
-//   },
-//   engine: {
-//     position: 'absolute',
-//     right: 0,
-//   },
-//   body: {
-//     backgroundColor: Colors.white,
-//   },
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//     color: Colors.black,
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//     color: Colors.dark,
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-//   footer: {
-//     color: Colors.dark,
-//     fontSize: 12,
-//     fontWeight: '600',
-//     padding: 4,
-//     paddingRight: 12,
-//     textAlign: 'right',
-//   },
-// });
+  return (
+    <View style={styles.container}>
+      <Header title='Vias Shopping List' />
+      <AddItem addItem={addItem} />
+      <ScrollView>
+      <FlatList
+        data={list.currentList}
+        renderItem={({ item }) => (
+          //<Text>{item.text}</Text>
+          <ListItem item={item}
+            //keyExtractor={item => item.id}
+            //getStyle={getStyle}
+            deleteItem={deleteItem}
+            ifTextTouched={ifTextTouched}
+          />)}
+      />
+      </ScrollView>
+    </View>
+  );
+};
 
-// export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 10
+  }
+});
+export default App;

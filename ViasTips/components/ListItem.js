@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 
 const ListItem = ({ item, deleteItem, ifTextTouched, getStyle }) => {
-  console.log("****", item.id);
-  console.log("**item", item);
-  console.log("***item.text", item.text);
+ // console.log("****", item.id);
+  //console.log("**item", item);
+  //console.log("***item.text", item.text);
   //alternative const ListItem = ({item})=>{
   // console.log(item);
   // const getStyle = () => {
@@ -19,9 +19,11 @@ const ListItem = ({ item, deleteItem, ifTextTouched, getStyle }) => {
   return (
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}  >
-        <Text style={item.ifPressed ? styles.listItemText : styles.ifDone} 
-        //getStyle(item)}
+        <Text 
+        style={item.ifPressed ? styles.ifDone : styles.listItemText} 
         onPress={() => ifTextTouched(item.id)} 
+        //style={getStyle(item)}
+        
         >{item.text}</Text>
         <Icon name="remove" size={20} color='firebrick'
           onPress={() => deleteItem(item.id)} />

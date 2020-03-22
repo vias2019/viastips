@@ -12,6 +12,7 @@ const App = () => {
     { id: uuid(), text: 'Chips', ifPressed: false },
     { id: uuid(), text: 'Bread', ifPressed: false }
   ]);
+  
 
   const deleteItem = id => {
     setItems(prevItems => {
@@ -22,27 +23,31 @@ const App = () => {
   };
   const getStyle = (list) => {
     console.log("*****get style",list);
+    
     return {
       textDecorationLine: list.ifPressed ? 'line-through' : 'none'
     };
   };
+
+  
   const ifTextTouched = id => {
     //console.log("item1 id: ", id);
     //console.log("list: ", list);
-
-    setItems(
-      () => {
-        list.map(listee => {
-          if (listee.id == id) {
-            listee.ifPressed = !listee.ifPressed;
-          }
-          
-        }); 
-        //getStyle(list);
-        console.log("Exactly this list: ", list);
-        return (list);
+     setItems(() => { 
+       return  ( 
+        list.map( (listee) => {
+          // console.log(listee);
+           const container=listee;
+              if (container.id == id) {
+            container.ifPressed = !container.ifPressed;
+           }
+           //console.log("container",container);
+           return container;
+         })
+         
+        );
       }
-    );
+     );  
   };
 
   const addItem = (text) => {
@@ -59,19 +64,19 @@ const App = () => {
     <View style={styles.container}>
       <Header title='Vias Shopping List' />
       <AddItem addItem={addItem} />
-      <ScrollView>
+     
       <FlatList
         data={list}
         renderItem={({ item }) => (
           //<Text>{item.text}</Text>
           <ListItem item={item}
             //keyExtractor={item => item.id}
-            getStyle={getStyle}
+            //getStyle={getStyle}
             deleteItem={deleteItem}
             ifTextTouched={ifTextTouched}
           />)}
       />
-      </ScrollView>
+      
     </View>
   );
 };
