@@ -3,19 +3,21 @@ import {View,Text,StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {AsyncStorage} from 'react-native';
 
-const AddItem = ({title, addItem}) => {
+const AddItem = ({addItem}) => {
 const [text1, setText]= useState('');
 const onChange =(textValue) => setText(textValue);
-
+const clear = ()=> {
+    setText(()=>{
+        return ('');});
+};
     //alternative const Header = (props)=>{
   return (
     <View>
         <TextInput placeholder="Add Item ..." 
-        style={styles.input} 
+        style={styles.input} value={text1}
         onChangeText={onChange}
-        
         />
-        <TouchableOpacity style={styles.btn} onPress={() => addItem (text1)}>
+        <TouchableOpacity style={styles.btn} onPress={() => {addItem (text1); clear();}}>
             <Text style={styles.btnText}>
                 <Icon name="plus" size={20}/>Add Item
             </Text>
