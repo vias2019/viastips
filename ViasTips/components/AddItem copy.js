@@ -3,19 +3,13 @@ import {View,Text,StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import {AsyncStorage} from 'react-native';
 
-const AddItem = ({ addItem}) => {
+const AddItem = ({addItem, deleteAll}) => {
 const [text1, setText]= useState('');
 const onChange =(textValue) => setText(textValue);
 const clear = ()=> {
     setText(()=>{
         return ('');});
 };
-const deleteAll = () => {
-    AsyncStorage.getAllKeys((err, keys) => {
-    console.log("keys:",keys);
-    AsyncStorage.multiRemove(keys);
-  });
-  };
     //alternative const Header = (props)=>{
   return (
     <View>
@@ -47,20 +41,31 @@ const styles = StyleSheet.create({
      fontSize: 16
  },
  btn: {
-     backgroundColor: '#c2bad8',
+     backgroundColor: '#8D79A6',
      padding: 9,
-     margin: 5
+     marginLeft: 5,
+     marginRight: 5,
+     margin: 5,
+     maxWidth: 100/0.5
  },
+ btnDelete: {
+    backgroundColor: '#66626A',
+    padding: 9,
+    margin: 5,
+    maxWidth: 100/0.5
+},
  btnText: {
-     color: 'darkslateblue',
-     fontSize: 20,
+     color: 'white',
+     fontSize: 18,
      textAlign: 'center'
  },
  dialogContentView: {
-    // flex: 2,
-       flexDirection: 'row',
-       justifyContent: 'space-between'
- }      
+   // flex: 2,
+      flexDirection: 'row',
+      justifyContent: 'space-between'
+      
+  }
+  
 });
 
 export default AddItem;
